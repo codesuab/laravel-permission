@@ -3,6 +3,15 @@
   "description": "Simple, secure and framework-native roles and permissions for Laravel, Blade and Inertia.",
   "type": "library",
   "license": "MIT",
+  "homepage": "https://codesuab.github.io/laravel-permission/",
+  "authors": [
+    {
+      "name": "codesuab",
+      "email": "sahabuab@gmail.com",
+      "homepage": "https://codesuab.com",
+      "role": "Developer"
+    }
+  ],
   "archive": {
     "exclude": [
       "/docs/",
