@@ -1,4 +1,4 @@
-# Codesuab Laravel Permission
+# Laravel Permission
 
 Secure, framework-native RBAC + ACL for Laravel 11/12/13 with Blade, Gate/Policy integration, Inertia React, teams/tenancy, wildcard permissions, route/resource protection and an ACL matrix API.
 
