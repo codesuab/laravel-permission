@@ -4,17 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codesuab Laravel Permission — Developer Guide & Documentation</title>
+    <title>Laravel Permission — Documentation & Reference</title>
     <meta name="description"
-        content="Official Developer Guide & Documentation for Codesuab Laravel Permission package. High performance, native RBAC + ACL with Blade, Gate/Policy, Inertia React, teams multi-tenancy, and ACL Matrix.">
+        content="Developer documentation and reference for Laravel Permission. High performance RBAC + ACL with Gate/Policy integration, Blade directives, Inertia React, teams multi-tenancy, and interactive ACL Matrix.">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
+
+    <!-- Tailwind CSS with Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <!-- PrismJS CDN for code highlighting -->
+
+    <!-- PrismJS Syntax Highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script
@@ -26,22 +30,27 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
                         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
                     },
                     colors: {
                         brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            200: '#c7d2fe',
-                            300: '#a5b4fc',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                            950: '#1e1b4b',
+                            50: '#f5f7ff',
+                            100: '#ebf0fe',
+                            200: '#dbe4fe',
+                            300: '#bfd0fd',
+                            400: '#94b1fc',
+                            500: '#638bf8',
+                            600: '#476ef2',
+                            700: '#3455de',
+                            800: '#2c45b4',
+                            900: '#283c8f',
+                            950: '#1a2456',
+                        },
+                        neutral: {
+                            850: '#181b20',
+                            925: '#0f1216',
+                            950: '#0a0c0f',
                         }
                     }
                 }
@@ -50,10 +59,10 @@
     </script>
 
     <style>
-        /* Custom Scrollbar */
+        /* Sleek modern scrollbars */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
         }
 
         ::-webkit-scrollbar-track {
@@ -61,195 +70,135 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(148, 163, 184, 0.3);
+            background: rgba(156, 163, 175, 0.2);
             border-radius: 9999px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(148, 163, 184, 0.5);
+            background: rgba(156, 163, 175, 0.4);
         }
 
-        /* Code block styling */
+        /* Prism styling refinement */
         pre[class*="language-"] {
-            border-radius: 0.75rem;
-            margin: 1.25rem 0;
-            padding: 1.25rem;
-            background: #0f172a !important;
-            border: 1px solid #1e293b;
-            font-size: 0.875rem;
-            line-height: 1.6;
+            margin: 0 !important;
+            padding: 1rem 1.25rem !important;
+            background: #0d1117 !important;
+            font-size: 0.8125rem !important;
+            line-height: 1.65 !important;
+            border-radius: 0 0 0.5rem 0.5rem !important;
         }
 
         code[class*="language-"],
         pre[class*="language-"] code {
-            font-family: 'JetBrains Mono', monospace !important;
+            font-family: 'JetBrains Mono', ui-monospace, monospace !important;
+            text-shadow: none !important;
         }
 
-        .code-container {
-            position: relative;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
-            padding: 0.35rem 0.65rem;
-            font-size: 0.75rem;
-            border-radius: 0.375rem;
-            background: rgba(30, 41, 59, 0.8);
-            color: #94a3b8;
-            border: 1px solid #334155;
-            backdrop-filter: blur(4px);
-            transition: all 0.2s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-            z-index: 10;
-        }
-
-        .copy-btn:hover {
-            color: #f8fafc;
-            background: rgba(51, 65, 85, 0.9);
-            border-color: #64748b;
-        }
-
-        .badge-tab {
-            position: absolute;
-            top: 0.75rem;
-            left: 1rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #64748b;
-        }
-
-        /* Sidebar active link styling */
+        /* Nav link active indicator */
         .nav-link.active {
-            color: #6366f1;
+            color: #476ef2;
+            background: rgba(71, 110, 242, 0.08);
             font-weight: 600;
-            background: rgba(99, 102, 241, 0.08);
-            border-left: 2px solid #6366f1;
         }
 
         .dark .nav-link.active {
-            color: #818cf8;
-            background: rgba(99, 102, 241, 0.15);
-            border-left: 2px solid #818cf8;
+            color: #94b1fc;
+            background: rgba(71, 110, 242, 0.14);
+        }
+
+        .glass-surface {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
     </style>
 </head>
 
 <body
-    class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white transition-colors duration-200">
+    class="bg-white text-slate-700 dark:bg-neutral-950 dark:text-slate-300 font-sans antialiased selection:bg-brand-500/20 selection:text-brand-700 dark:selection:text-brand-300 transition-colors duration-150">
 
-    <!-- Top Sticky Header -->
+    <!-- Top Navigation Header -->
     <header
-        class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/85 dark:bg-slate-950/85 border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        class="sticky top-0 z-40 w-full glass-surface bg-white/90 dark:bg-neutral-950/90 border-b border-slate-200/80 dark:border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
 
+            <!-- Title & Version Info -->
             <div class="flex items-center gap-3">
-                <!-- Mobile menu toggle -->
                 <button id="mobile-menu-btn"
-                    class="lg:hidden p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none"
+                    class="lg:hidden p-1.5 rounded-md text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 focus:outline-none"
                     aria-label="Toggle navigation">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                 </button>
 
-                <a href="#" class="flex items-center gap-2.5 group">
-                    <div
-                        class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-bold shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <div
-                            class="font-extrabold text-base tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                            <span>Codesuab</span>
-                            <span class="text-brand-600 dark:text-brand-400">Permission</span>
-                        </div>
-                        <div
-                            class="text-[10px] uppercase font-semibold text-slate-400 dark:text-slate-500 tracking-wider">
-                            Developer Guide</div>
-                    </div>
+                <a href="#" class="flex items-center gap-2">
+                    <span class="font-bold text-sm tracking-tight text-slate-900 dark:text-white">Permission</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 font-normal">/ Documentation</span>
                 </a>
 
-                <div class="hidden sm:flex items-center gap-1.5 ml-2">
+                <div
+                    class="hidden sm:flex items-center gap-2 ml-2 pl-3 border-l border-slate-200 dark:border-slate-800 text-xs">
                     <span
-                        class="text-xs px-2 py-0.5 rounded-full font-medium bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-brand-300 border border-brand-200 dark:border-brand-800/60">v1.x</span>
+                        class="px-2 py-0.5 rounded font-mono text-[11px] font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800">v1.4.0</span>
                     <span
-                        class="text-xs px-2 py-0.5 rounded-full font-medium bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">Laravel
+                        class="px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Laravel
                         11, 12, 13</span>
                 </div>
             </div>
 
-            <!-- Quick Search Bar -->
-            <div class="relative flex-1 max-w-md hidden md:block">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Global Search Bar Button (Opens Modal) -->
+            <button id="search-modal-trigger"
+                class="flex items-center justify-between w-full max-w-xs sm:max-w-sm px-3 py-1.5 text-xs text-slate-400 bg-slate-100/80 dark:bg-slate-900/80 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 border border-slate-200/80 dark:border-slate-800/80 rounded-lg transition group">
+                <div class="flex items-center gap-2">
+                    <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
+                    <span>Search docs...</span>
                 </div>
-                <input type="text" id="doc-search" placeholder="Search guide (e.g. wildcard, teams, blade, gate)..."
-                    class="w-full pl-9 pr-12 py-1.5 text-xs bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all">
-                <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
+                <div class="flex items-center gap-1 font-mono text-[10px] text-slate-400">
                     <kbd
-                        class="text-[10px] font-mono bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">/</kbd>
+                        class="px-1.5 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-2xs">⌘K</kbd>
                 </div>
-            </div>
+            </button>
 
-            <!-- Controls & Links -->
+            <!-- Navigation Controls -->
             <div class="flex items-center gap-2">
                 <a href="#playground"
-                    class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-                    <svg class="w-3.5 h-3.5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    Playground
+                    class="hidden sm:inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900 transition">
+                    <span>Sandbox</span>
                 </a>
 
-                <!-- Dark/Light theme toggle -->
                 <button id="theme-toggle"
-                    class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition focus:outline-none"
-                    title="Toggle Theme" aria-label="Toggle dark mode">
-                    <svg id="theme-icon-light" class="w-5 h-5 hidden" fill="none" stroke="currentColor"
+                    class="p-1.5 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-900 transition focus:outline-none"
+                    title="Toggle theme">
+                    <svg id="theme-icon-light" class="w-4 h-4 hidden" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
-                    <svg id="theme-icon-dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg id="theme-icon-dark" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
                 </button>
             </div>
-
         </div>
     </header>
 
-    <!-- Main Container with Sidebar, Content, and TOC -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-10">
 
-            <!-- Left Sidebar Navigation -->
+            <!-- Left Navigation Sidebar -->
             <aside id="sidebar"
-                class="fixed inset-y-0 left-0 z-40 w-72 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 p-6 overflow-y-auto transform -translate-x-full transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:z-auto lg:w-64 lg:p-0 lg:border-r-0 lg:bg-transparent lg:block">
+                class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-neutral-950 border-r border-slate-200 dark:border-slate-800 p-6 overflow-y-auto transform -translate-x-full transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:z-auto lg:w-56 lg:p-0 lg:border-r-0 lg:bg-transparent lg:block flex-shrink-0">
                 <div
                     class="flex items-center justify-between pb-4 lg:hidden border-b border-slate-200 dark:border-slate-800 mb-4">
-                    <div class="font-bold text-slate-800 dark:text-slate-100">Navigation Menu</div>
+                    <span class="font-bold text-slate-900 dark:text-white text-xs">Table of Contents</span>
                     <button id="close-sidebar-btn"
-                        class="p-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-                        aria-label="Close navigation">
+                        class="p-1 rounded text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12" />
@@ -257,303 +206,282 @@
                     </button>
                 </div>
 
-                <nav class="space-y-6 text-sm" id="sidebar-nav">
+                <nav class="space-y-5 text-xs" id="sidebar-nav">
                     <div>
                         <div
-                            class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
-                            Overview</div>
-                        <ul class="space-y-1">
+                            class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500 mb-2 px-2">
+                            Getting Started</div>
+                        <ul class="space-y-0.5">
                             <li><a href="#overview"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Introduction
-                                    & Features</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Overview</a>
+                            </li>
                             <li><a href="#installation"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Installation
-                                    & Setup</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Installation</a>
+                            </li>
                             <li><a href="#configuration"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Configuration
-                                    Reference</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Configuration</a>
+                            </li>
                         </ul>
                     </div>
 
                     <div>
                         <div
-                            class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
-                            Core API</div>
-                        <ul class="space-y-1">
+                            class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500 mb-2 px-2">
+                            Core Primitives</div>
+                        <ul class="space-y-0.5">
                             <li><a href="#models-and-traits"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">User
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">User
                                     Model & Traits</a></li>
                             <li><a href="#permissions-and-roles"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Permissions
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Permissions
                                     & Roles</a></li>
                             <li><a href="#wildcards"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Wildcard
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Wildcard
                                     Matching</a></li>
                             <li><a href="#super-admin"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Super
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Super
                                     Admin Bypass</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <div
-                            class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
+                            class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500 mb-2 px-2">
                             Routing & Policies</div>
-                        <ul class="space-y-1">
+                        <ul class="space-y-0.5">
                             <li><a href="#route-protection"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Route
-                                    Macros & Middleware</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Route
+                                    Macros</a></li>
                             <li><a href="#resource-protection"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Resource
-                                    Controller Binding</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Resource
+                                    Mapping</a></li>
                             <li><a href="#gate-policy-integration"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Gate
-                                    & Policy Integration</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Gates
+                                    & Policies</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <div
-                            class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
-                            Advanced Features</div>
-                        <ul class="space-y-1">
+                            class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500 mb-2 px-2">
+                            Multi-Tenancy & UI</div>
+                        <ul class="space-y-0.5">
                             <li><a href="#multi-tenancy-teams"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Teams
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Teams
                                     & Multi-Tenancy</a></li>
                             <li><a href="#acl-matrix"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">ACL
-                                    Matrix API & React UI</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">ACL
+                                    Matrix Service</a></li>
                             <li><a href="#blade-directives"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Blade
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Blade
                                     Directives</a></li>
                             <li><a href="#inertia-react"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Inertia
-                                    React Adapter</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Inertia
+                                    React SDK</a></li>
                         </ul>
                     </div>
 
                     <div>
                         <div
-                            class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2">
-                            Developer Tools</div>
-                        <ul class="space-y-1">
+                            class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500 mb-2 px-2">
+                            System Tools</div>
+                        <ul class="space-y-0.5">
                             <li><a href="#cli-commands"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Artisan
-                                    CLI Commands</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Artisan
+                                    Commands</a></li>
                             <li><a href="#helpers"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Global
-                                    Helper Functions</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Global
+                                    Helpers</a></li>
                             <li><a href="#database-schema"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Database
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Database
                                     Schema</a></li>
                             <li><a href="#caching-performance"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Caching
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">Caching
                                     & Invalidation</a></li>
                             <li><a href="#playground"
-                                    class="nav-link block px-2.5 py-1.5 rounded-lg text-brand-600 dark:text-brand-400 font-semibold bg-brand-50/50 dark:bg-brand-950/30">Interactive
-                                    Playground</a></li>
+                                    class="nav-link block px-2.5 py-1.5 rounded-md text-brand-600 dark:text-brand-400 font-semibold bg-brand-50/70 dark:bg-brand-950/40">Interactive
+                                    Sandbox</a></li>
                         </ul>
                     </div>
                 </nav>
             </aside>
 
-            <!-- Main Content Area -->
-            <main class="flex-1 min-w-0 max-w-4xl">
+            <main class="flex-1 min-w-0 max-w-3xl">
 
-                <!-- Hero Section -->
-                <section class="mb-14 pb-10 border-b border-slate-200 dark:border-slate-800">
-                    <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 border border-brand-200/80 dark:border-brand-800/60 mb-4">
-                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                        Laravel 11, 12 & 13 Native
-                    </div>
-                    <h1
-                        class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-                        Codesuab Laravel Permission
+                <!-- Clean Hero -->
+                <section class="mb-12 pb-8 border-b border-slate-200/80 dark:border-slate-800/80">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+                        Documentation</div>
+
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3">
+                        Laravel Permission
                     </h1>
-                    <p class="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mb-6">
-                        A high-performance, framework-native RBAC and ACL package for Laravel. Features seamless
-                        Gate/Policy hooks, Blade directives, Inertia.js React components, first-class
-                        Multi-Tenancy/Teams, wildcard permissions, and an interactive ACL Matrix.
+
+                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                        An enterprise-grade, framework-native authorization package for Laravel. Combines Role-Based
+                        Access Control (RBAC) with fine-grained direct permissions, multi-tenant team boundaries, and
+                        automatic front-to-back reactivity.
                     </p>
 
-                    <!-- Quick action & composer snippet -->
-                    <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                    <!-- Clean Install Command Box -->
+                    <div
+                        class="rounded-lg border border-slate-200 dark:border-slate-800 bg-neutral-925 overflow-hidden shadow-xs">
                         <div
-                            class="relative flex-1 bg-slate-900 text-slate-100 font-mono text-xs sm:text-sm rounded-xl px-4 py-3 border border-slate-800 flex items-center justify-between shadow-sm">
-                            <span class="truncate"><span class="text-brand-400 font-bold">$</span> composer require
-                                codesuab/laravel-permission</span>
-                            <button class="copy-btn !static ml-3 !py-1"
-                                onclick="navigator.clipboard.writeText('composer require codesuab/laravel-permission'); showToast('Copied to clipboard!')">Copy</button>
+                            class="flex items-center justify-between px-3.5 py-2 border-b border-slate-800 text-[11px] font-mono text-slate-400">
+                            <span class="text-slate-400">bash</span>
+                            <button
+                                class="copy-btn-snippet text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5"
+                                data-code="composer require laravel-permission">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                <span>Copy</span>
+                            </button>
                         </div>
-                        <a href="#installation"
-                            class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-md shadow-brand-600/20 transition">
-                            Get Started
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                        </a>
+                        <div class="p-3.5 font-mono text-xs sm:text-sm text-slate-200 flex items-center gap-2">
+                            <span class="text-slate-500 select-none">$</span>
+                            <code>composer require laravel-permission</code>
+                        </div>
                     </div>
 
-                    <!-- Feature Cards Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+                    <!-- Clean Neutral Feature Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-5">
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold mb-3">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Zero Method Overrides</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Uses <code
-                                    class="text-brand-500">Permission::ensure()</code> without ever overriding
-                                Eloquent's native <code class="text-brand-500">Model::create()</code>.</p>
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-semibold text-xs text-slate-900 dark:text-white mb-1">Zero Overrides</div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">Utilizes idempotent
+                                <code class="font-mono text-brand-600 dark:text-brand-400">ensure()</code> methods
+                                without modifying Eloquent's native core.</p>
                         </div>
 
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold mb-3">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Tenant & Team Scoped</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Assign roles and
-                                permissions globally or per tenant/team with automatic middleware context isolation.</p>
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-semibold text-xs text-slate-900 dark:text-white mb-1">Team Scoped</div>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">Assign roles
+                                globally or scoped per tenant/team with automated middleware context resolution.</p>
                         </div>
 
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold mb-3">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                </svg>
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-semibold text-xs text-slate-900 dark:text-white mb-1">Gate & Route Hooks
                             </div>
-                            <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-1">Gate & Route Hooks</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 leading-normal">Automatic <code
-                                    class="text-brand-500">Gate::before</code> integration, model table inference, and
-                                fluent <code class="text-brand-500">Route::can()</code> macros.</p>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-normal">Automatic <code
+                                    class="font-mono text-brand-600 dark:text-brand-400">Gate::before</code>
+                                integration, model table inference, and fluent macros.</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Section: Overview -->
-                <section id="overview" class="mb-14 scroll-mt-20">
+                <section id="overview" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Overview & Architecture
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Architecture & Core Principles
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission is engineered specifically for modern Laravel applications that need
-                        enterprise-grade authorization without boilerplate or database overhead. It combines Role-Based
-                        Access Control (RBAC) and Access Control Lists (ACL) in a unified, intuitive schema.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        This package is designed to eliminate N+1 bottlenecks and boilerplate code. It aligns with
+                        standard Laravel conventions rather than introducing divergent paradigms or custom query
+                        builders.
                     </p>
 
                     <div
-                        class="rounded-xl bg-slate-100 dark:bg-slate-900 p-5 border border-slate-200 dark:border-slate-800 mb-6">
-                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200 mb-2">Core Architectural
-                            Principles</h4>
-                        <ul
-                            class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                            <li><strong>Framework Native:</strong> Leverages standard Laravel conventions—service
-                                providers, Eloquent relationships, Gates, Policies, and Middlewares.</li>
-                            <li><strong>Zero Interference:</strong> Avoids dangerous magic or polluting Eloquent core
-                                methods like <code class="text-brand-500">create()</code>.</li>
-                            <li><strong>Contextual Caching:</strong> Permissions are cached per-user and per-team with
-                                automatic invalidation upon any role or direct permission assignment.</li>
-                            <li><strong>Front-to-Back Symmetry:</strong> Authorize on the backend with Gate/Route and
-                                reflect seamlessly in Blade directives or Inertia React components.</li>
-                        </ul>
+                        class="p-4 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-neutral-900/40 text-slate-700 dark:text-slate-300 text-xs leading-relaxed">
+                        <div class="font-semibold text-slate-900 dark:text-white mb-1">Native Eloquent Contract</div>
+                        <p class="text-slate-500 dark:text-slate-400">Unlike packages that override core Eloquent
+                            lifecycle hooks, this package uses clean relationships and contextually caches resolved
+                            abilities under your application's configured cache store.</p>
                     </div>
                 </section>
 
-                <!-- Section: Installation -->
-                <section id="installation" class="mb-14 scroll-mt-20">
+                <section id="installation" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Installation & Setup
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Installation & Setup
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Follow this 4-step installation workflow to install the package, publish configuration, run
-                        database migrations, and seed the default super-admin role.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+                        Follow these standard steps to publish configuration, run database migrations, and equip your
+                        user model.
                     </p>
 
-                    <div class="space-y-6">
-                        <!-- Step 1 -->
-                        <div class="border-l-2 border-brand-500 pl-4">
-                            <span
-                                class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Step
-                                1</span>
-                            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-0.5 mb-2">Install via
+                    <!-- Clean numbered steps -->
+                    <div class="space-y-5">
+                        <div class="border-l-2 border-slate-200 dark:border-slate-800 pl-4">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Step 1</span>
+                            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 mb-2">Install via
                                 Composer</h3>
-                            <div class="code-container">
-                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                                <pre
-                                    class="language-bash"><code>composer require codesuab/laravel-permission</code></pre>
+                            <div
+                                class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <div
+                                    class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                                    <span>terminal</span>
+                                    <button class="hover:text-white transition"
+                                        onclick="copySnippet(this)">Copy</button>
+                                </div>
+                                <pre class="language-bash"><code>composer require laravel-permission</code></pre>
                             </div>
                         </div>
 
-                        <!-- Step 2 -->
-                        <div class="border-l-2 border-brand-500 pl-4">
-                            <span
-                                class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Step
-                                2</span>
-                            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-0.5 mb-2">Publish
-                                Configuration and Migrate Database</h3>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-2">Run the interactive
-                                installer to publish <code class="text-brand-500">config/permission.php</code> and
-                                execute migrations:</p>
-                            <div class="code-container">
-                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <div class="border-l-2 border-slate-200 dark:border-slate-800 pl-4">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Step 2</span>
+                            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 mb-1">Run Automated
+                                Installer</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Publishes <code
+                                    class="font-mono text-brand-600 dark:text-brand-400">config/permission.php</code>
+                                and executes database migrations:</p>
+                            <div
+                                class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <div
+                                    class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                                    <span>terminal</span>
+                                    <button class="hover:text-white transition"
+                                        onclick="copySnippet(this)">Copy</button>
+                                </div>
                                 <pre class="language-bash"><code>php artisan permission:install</code></pre>
                             </div>
-                            <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Alternatively, run manually:
-                                <code
-                                    class="text-slate-600 dark:text-slate-300">php artisan vendor:publish --tag=permission-config &amp;&amp; php artisan migrate</code>
-                            </p>
                         </div>
 
-                        <!-- Step 3 -->
-                        <div class="border-l-2 border-brand-500 pl-4">
-                            <span
-                                class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Step
-                                3</span>
-                            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-0.5 mb-2">Seed Super-Admin
-                                Role</h3>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-2">Creates the wildcard
-                                permission <code class="text-brand-500">*</code> and initial active <code
-                                    class="text-brand-500">super-admin</code> role:</p>
-                            <div class="code-container">
-                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <div class="border-l-2 border-slate-200 dark:border-slate-800 pl-4">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Step 3</span>
+                            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 mb-1">Seed Wildcard
+                                Super-Admin</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Registers the master <code
+                                    class="font-mono text-brand-600 dark:text-brand-400">*</code> ability and default
+                                administrative role:</p>
+                            <div
+                                class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <div
+                                    class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                                    <span>terminal</span>
+                                    <button class="hover:text-white transition"
+                                        onclick="copySnippet(this)">Copy</button>
+                                </div>
                                 <pre class="language-bash"><code>php artisan permission:seed</code></pre>
                             </div>
                         </div>
 
-                        <!-- Step 4 -->
-                        <div class="border-l-2 border-brand-500 pl-4">
-                            <span
-                                class="text-xs font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Step
-                                4</span>
-                            <h3 class="text-base font-bold text-slate-900 dark:text-white mt-0.5 mb-2">Attach Traits to
-                                User Model</h3>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-2">Add <code
-                                    class="text-brand-500">HasPermissions</code> and optionally <code
-                                    class="text-brand-500">HasTeams</code> to your Authenticatable model (usually <code
-                                    class="text-brand-500">App\Models\User</code>):</p>
-                            <div class="code-container">
-                                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <div class="border-l-2 border-slate-200 dark:border-slate-800 pl-4">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Step 4</span>
+                            <h3 class="text-xs font-bold text-slate-900 dark:text-white mt-0.5 mb-1">Add Traits to User
+                                Model</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Import <code
+                                    class="font-mono text-brand-600 dark:text-brand-400">HasPermissions</code> and
+                                optionally <code class="font-mono text-brand-600 dark:text-brand-400">HasTeams</code> in
+                                your Authenticatable model:</p>
+                            <div
+                                class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+                                <div
+                                    class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                                    <span>app/Models/User.php</span>
+                                    <button class="hover:text-white transition"
+                                        onclick="copySnippet(this)">Copy</button>
+                                </div>
                                 <pre class="language-php"><code>namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Codesuab\Permission\Traits\HasPermissions;
-use Codesuab\Permission\Traits\HasTeams;
+use Permission\Traits\HasPermissions;
+use Permission\Traits\HasTeams;
 
 class User extends Authenticatable
 {
@@ -566,19 +494,23 @@ class User extends Authenticatable
                     </div>
                 </section>
 
-                <!-- Section: Configuration Reference -->
-                <section id="configuration" class="mb-14 scroll-mt-20">
+                <section id="configuration" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Configuration Reference
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Configuration Reference
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        The configuration file is located at <code class="text-brand-500">config/permission.php</code>.
-                        All options can be modified or overridden with environment variables.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        The configuration file is published at <code
+                            class="font-mono text-brand-600 dark:text-brand-400">config/permission.php</code>:
                     </p>
 
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>config/permission.php</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
                         <pre class="language-php"><code>return [
     /*
      * The User Eloquent model to associate roles and permissions with.
@@ -586,16 +518,16 @@ class User extends Authenticatable
     'user_model' => env('PERMISSION_USER_MODEL', App\Models\User::class),
 
     /*
-     * Customizable Eloquent models used across the package.
+     * Eloquent models used across the package.
      */
     'models' => [
-        'role'       => Codesuab\Permission\Models\Role::class,
-        'permission' => Codesuab\Permission\Models\Permission::class,
-        'team'       => Codesuab\Permission\Models\Team::class,
+        'role'       => Permission\Models\Role::class,
+        'permission' => Permission\Models\Permission::class,
+        'team'       => Permission\Models\Team::class,
     ],
 
     /*
-     * Database table names. Override if existing tables collide.
+     * Database table names.
      */
     'tables' => [
         'roles'            => 'roles',
@@ -616,23 +548,13 @@ class User extends Authenticatable
     ],
 
     /*
-     * Cache configuration for resolved permissions.
+     * Cache configuration for resolved abilities.
      */
     'cache' => [
         'enabled' => true,
-        'store'   => null, // null defaults to Cache::getDefaultDriver()
-        'ttl'     => 3600, // in seconds
-        'prefix'  => 'codesuab.permission',
-    ],
-
-    /*
-     * Inertia.js auto-sharing configuration.
-     */
-    'inertia' => [
-        'enabled'     => true,
-        'share'       => 'auth.permissions',
-        'roles_share' => 'auth.roles',
-        'team_share'  => 'auth.team',
+        'store'   => null, // defaults to Cache::getDefaultDriver()
+        'ttl'     => 3600, // seconds
+        'prefix'  => 'app.permission',
     ],
 
     /*
@@ -643,1177 +565,823 @@ class User extends Authenticatable
         'route_parameter'        => 'team',
         'require_membership'     => true,
         'current_team_attribute' => 'current_team_id',
-        'global_permissions'     => true, // allow global grants inside teams
-    ],
-
-    /*
-     * Gate / Policy integration options.
-     */
-    'policies' => [
-        'enabled'                           => true,
-        'infer_resource_from_model_table'   => true,
-        'map' => [
-            // App\Models\Invoice::class => 'billing.invoices',
-        ],
-        'abilities' => [
-            'viewAny'     => 'view',
-            'view'        => 'view',
-            'create'      => 'create',
-            'update'      => 'update',
-            'delete'      => 'delete',
-            'restore'     => 'restore',
-            'forceDelete' => 'force-delete',
-        ],
+        'global_permissions'     => true,
     ],
 ];</code></pre>
                     </div>
                 </section>
 
-                <!-- Section: Models & Traits -->
-                <section id="models-and-traits" class="mb-14 scroll-mt-20">
+                <section id="models-and-traits" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> User Model & Traits API
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        User Model & Traits API
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        The <code class="text-brand-500">HasPermissions</code> trait equips your User model with a full
-                        suite of fluent role and permission management methods.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        The <code class="font-mono text-brand-600 dark:text-brand-400">HasPermissions</code> trait
+                        equips the authenticatable model with fluent role and permission management:
                     </p>
 
-                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
-                        <table class="w-full text-left text-xs sm:text-sm">
+                    <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 mb-6">
+                        <table class="w-full text-left text-xs">
                             <thead
-                                class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+                                class="bg-slate-50 dark:bg-neutral-900 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
                                 <tr>
-                                    <th class="p-3">Method</th>
-                                    <th class="p-3">Parameters</th>
-                                    <th class="p-3">Description</th>
+                                    <th class="p-3 font-semibold">Method</th>
+                                    <th class="p-3 font-semibold">Signature</th>
+                                    <th class="p-3 font-semibold">Description</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-mono text-xs">
+                            <tbody class="divide-y divide-slate-200/80 dark:divide-slate-800/80 font-mono text-[11px]">
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">assignRole()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string|array $roles, $teamId =
-                                        null</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Assigns one or multiple
-                                        roles (attaches without detaching existing).</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">assignRole()</td>
+                                    <td class="p-3 text-slate-500">string|array $roles, $teamId = null</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Assigns one or more
+                                        roles without detaching existing.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">syncRoles()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">array $roles, $teamId = null</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Replaces all user roles
-                                        with the provided list.</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">syncRoles()</td>
+                                    <td class="p-3 text-slate-500">array $roles, $teamId = null</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Synchronizes roles,
+                                        detaching unlisted assignments.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">removeRole()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string|array $roles, $teamId =
-                                        null</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">removeRole()</td>
+                                    <td class="p-3 text-slate-500">string|array $roles, $teamId = null</td>
                                     <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Detaches specified
-                                        roles from the user.</td>
+                                        roles.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">hasRole()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string $role</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if user
-                                        possesses the specified role.</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">hasRole()</td>
+                                    <td class="p-3 text-slate-500">string $role</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Determines if the user
+                                        holds the given role.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">hasAnyRole()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">array $roles</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Returns true if user
-                                        has at least one role in list.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">givePermissionTo()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string|array $permissions,
-                                        $teamId = null</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Assigns direct
-                                        permissions directly to user without roles.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">revokePermissionTo()
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">givePermissionTo()
                                     </td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string|array $permissions,
-                                        $teamId = null</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Revokes direct
-                                        permissions from user.</td>
+                                    <td class="p-3 text-slate-500">string|array $perms, $teamId = null</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Grants direct ACL
+                                        permissions to user.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">hasPermission()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">string $permission</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if user has
-                                        permission via roles or direct grants.</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">
+                                        revokePermissionTo()</td>
+                                    <td class="p-3 text-slate-500">string|array $perms, $teamId = null</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Revokes direct ACL
+                                        permissions.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">hasAnyPermission()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">array $permissions</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if user matches
-                                        any of the given permissions.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">hasAllPermissions()
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">hasPermission()
                                     </td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">array $permissions</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if user
-                                        satisfies every permission in list.</td>
+                                    <td class="p-3 text-slate-500">string $permission</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks permission via
+                                        role hierarchy or direct grant.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permissionSlugs()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">void</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Returns array of all
-                                        permission slugs available to user.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">isSuperAdmin()</td>
-                                    <td class="p-3 text-slate-600 dark:text-slate-400">void</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Returns true if user
-                                        has configured super admin role.</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">permissionSlugs()
+                                    </td>
+                                    <td class="p-3 text-slate-500">void</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Returns list of all
+                                        resolved permissions for the user.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Section: Permissions & Roles -->
-                <section id="permissions-and-roles" class="mb-14 scroll-mt-20">
+                <section id="permissions-and-roles" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Permissions & Roles Deep Dive
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Permissions & Roles Fluent API
                     </h2>
 
-                    <!-- Callout -->
-                    <div
-                        class="p-4 rounded-xl border border-amber-300/60 dark:border-amber-700/60 bg-amber-50/80 dark:bg-amber-950/30 text-amber-900 dark:text-amber-200 mb-6 flex gap-3 text-sm">
-                        <svg class="w-5 h-5 flex-shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        <div>
-                            <strong>Design Notice:</strong> Always use <code
-                                class="font-bold">Permission::ensure()</code> rather than creating records manually.
-                            <code class="font-bold">ensure()</code> formats the slug, sets a humanized title, extracts
-                            the group prefix, and avoids overriding Eloquent's native <code
-                                class="font-bold">Model::create()</code>.
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>Usage</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
                         </div>
-                    </div>
+                        <pre class="language-php"><code>use Permission\Models\Permission;
+use Permission\Models\Role;
 
-                    <div class="space-y-4">
-                        <div class="code-container">
-                            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                            <pre class="language-php"><code>use Codesuab\Permission\Models\Permission;
-use Codesuab\Permission\Models\Role;
-
-// 1. Ensure permissions exist (idempotent firstOrCreate)
+// 1. Ensure permissions exist idempotently
 Permission::ensure('users.view');
 Permission::ensureMany(['users.create', 'users.update', 'users.delete']);
 
-// 2. Generate standard resource CRUD permissions
-// Returns ['view' => 'users.view', 'create' => 'users.create', 'update' => 'users.update', 'delete' => 'users.delete']
-$crud = Permission::crud('users');
+// 2. Generate standard resource CRUD in bulk
+// ['view' => 'posts.view', 'create' => 'posts.create', 'update' => 'posts.update', 'delete' => 'posts.delete']
+$crud = Permission::crud('posts');
 
-// 3. Create a Role and attach permissions
-$manager = Role::createRole('manager');
-$manager->allow([
-    'users.view',
-    'users.create',
-    'users.update',
-]);
+// 3. Define Roles and assign permissions
+$editor = Role::createRole('editor');
+$editor->allow(['posts.view', 'posts.create', 'posts.update']);
 
-// 4. Revoke or sync permissions on role
-$manager->deny('users.update');
-$manager->syncPermissions(['users.view', 'reports.export']);
+// 4. Assign to User
+$user->assignRole('editor');
 
-// 5. Assign to User
-$user->assignRole('manager');
-$user->givePermissionTo('special.audit'); // direct grant
-
-// 6. Inspect access
-if ($user->hasPermission('users.view')) {
-    // User is authorized
+// 5. Check permissions
+if ($user->hasPermission('posts.update')) {
+    // Authorized
 }</code></pre>
-                        </div>
                     </div>
                 </section>
 
-                <!-- Section: Wildcards -->
-                <section id="wildcards" class="mb-14 scroll-mt-20">
+                <section id="wildcards" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Wildcard Permissions
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Wildcard Permissions
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission features native wildcard matching with dot-notation. You can grant
-                        wildcards to entire domains or submodules without defining every individual action.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Dot-notation wildcards allow authorization across entire modules or subdomains:
                     </p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
-                            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-2 flex items-center gap-1.5">
-                                <span
-                                    class="px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-mono text-xs">*</span>
-                                Global Wildcard
-                            </h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Grants unconditional access to all
-                                abilities across the entire application.</p>
-                            <pre class="language-php mt-2"><code>Role::createRole('root')->allow('*');</code></pre>
-                        </div>
-
-                        <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60">
-                            <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-2 flex items-center gap-1.5">
-                                <span
-                                    class="px-2 py-0.5 rounded bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 font-mono text-xs">users.*</span>
-                                Domain Wildcard
-                            </h4>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Matches any action under <code
-                                    class="text-brand-500">users</code> (e.g. <code
-                                    class="text-slate-400">users.view</code>, <code
-                                    class="text-slate-400">users.delete</code>, etc.).</p>
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/40">
+                            <div class="font-mono text-xs font-semibold text-slate-900 dark:text-white mb-1">
+                                Pattern: <code class="text-brand-600 dark:text-brand-400">*</code>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Permits unconditional
+                                authorization across every gate and check.</p>
                             <pre
-                                class="language-php mt-2"><code>Role::createRole('admin')->allow('users.*');</code></pre>
+                                class="language-php text-[11px] p-2 rounded bg-neutral-925"><code>$role->allow('*');</code></pre>
                         </div>
-                    </div>
 
-                    <div class="p-4 rounded-xl bg-slate-900 text-slate-200 text-xs border border-slate-800 mb-6">
-                        <div class="font-mono font-bold text-brand-400 mb-1">Under the Hood: Regex Compilation</div>
-                        <p class="text-slate-400">Permissions containing <code class="text-slate-200">*</code> or <code
-                                class="text-slate-200">?</code> are escaped safely with <code
-                                class="text-slate-200">preg_quote</code> and translated to <code
-                                class="text-slate-200">.*</code> and <code class="text-slate-200">.</code> regex
-                            patterns, ensuring deterministic evaluation without ReDoS vulnerability.</p>
+                        <div
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/40">
+                            <div class="font-mono text-xs font-semibold text-slate-900 dark:text-white mb-1">
+                                Pattern: <code class="text-brand-600 dark:text-brand-400">users.*</code>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Matches any ability under <code
+                                    class="text-brand-500">users</code> (<code class="text-slate-400">users.edit</code>,
+                                <code class="text-slate-400">users.delete</code>).</p>
+                            <pre
+                                class="language-php text-[11px] p-2 rounded bg-neutral-925"><code>$role->allow('users.*');</code></pre>
+                        </div>
                     </div>
                 </section>
 
-                <!-- Section: Super Admin -->
-                <section id="super-admin" class="mb-14 scroll-mt-20">
+                <section id="super-admin" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Super Admin Bypass
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Super Admin Bypass
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Applications frequently require a master administrative role that bypasses all permission checks
-                        without needing individual grants. Configure this in <code
-                            class="text-brand-500">config/permission.php</code>:
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Users holding the configured <code
+                            class="font-mono text-brand-600 dark:text-brand-400">super-admin</code> role short-circuit
+                        checks and evaluate immediately to <code class="text-emerald-500 font-semibold">true</code>
+                        across Gates, Policies, and Middleware.
                     </p>
 
-                    <div class="code-container mb-4">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-4">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>config/permission.php</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
                         <pre class="language-php"><code>'super_admin' => [
     'enabled' => true,
     'role'    => 'super-admin',
 ],</code></pre>
                     </div>
-
-                    <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">
-                        When enabled, any user possessing the active <code class="text-brand-500">super-admin</code>
-                        role automatically evaluates to <code class="text-emerald-500 font-bold">true</code> on all
-                        <code class="text-brand-500">hasPermission()</code>, <code
-                            class="text-brand-500">Gate::allows()</code>, and middleware checks without additional
-                        database queries.
-                    </p>
                 </section>
 
-                <!-- Section: Route Protection & Macros -->
-                <section id="route-protection" class="mb-14 scroll-mt-20">
+                <section id="route-protection" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Route Macros & Middleware
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Route Macros & Middleware
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission automatically registers expressive macros on Laravel's <code
-                            class="text-brand-500">Route</code> facade, letting you protect endpoints with clean syntax.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Expressive macros registered directly on Laravel's <code
+                            class="font-mono text-brand-600 dark:text-brand-400">Route</code> facade:
                     </p>
 
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>routes/web.php</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
                         <pre class="language-php"><code>use Illuminate\Support\Facades\Route;
 
-// Single or multiple permissions (OR check - user needs ANY of these)
+// Require ANY listed permission (OR)
 Route::get('/users', [UserController::class, 'index'])->can('users.view');
-Route::get('/analytics', [AnalyticsController::class, 'show'])->can('analytics.view', 'reports.view');
 
-// Multiple permissions (AND check - user needs ALL of these)
+// Require ALL listed permissions (AND)
 Route::get('/export', [ExportController::class, 'run'])->canAll('reports.view', 'reports.export');
 
-// Role-based protection
-Route::get('/admin/panel', [AdminController::class, 'index'])->role('admin');
-Route::get('/finance/settings', [FinanceController::class, 'edit'])->roleAll('admin', 'finance-lead');
+// Role guards
+Route::get('/admin', [AdminController::class, 'index'])->role('admin');
+Route::get('/audit', [SecurityController::class, 'index'])->roleAll('admin', 'auditor');
 
-// Team-aware route macro
-Route::team('team')->group(function () {
-    Route::get('/teams/{team}/dashboard', [TeamDashboardController::class, 'show']);
-});</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Available Middleware Aliases</h3>
-                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
-                        <table class="w-full text-left text-xs sm:text-sm">
-                            <thead
-                                class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
-                                <tr>
-                                    <th class="p-3">Middleware Alias</th>
-                                    <th class="p-3">Class Name</th>
-                                    <th class="p-3">Behavior</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-mono text-xs">
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permission:perm1,perm2
-                                    </td>
-                                    <td class="p-3 text-slate-500">PermissionMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Requires any of the
-                                        listed permissions (OR).</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">
-                                        permission.all:perm1,perm2</td>
-                                    <td class="p-3 text-slate-500">PermissionAllMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Requires all listed
-                                        permissions (AND).</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">role:role1,role2</td>
-                                    <td class="p-3 text-slate-500">RoleMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Requires any of the
-                                        specified roles (OR).</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">role.all:role1,role2
-                                    </td>
-                                    <td class="p-3 text-slate-500">RoleAllMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Requires all specified
-                                        roles (AND).</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">
-                                        permission.resource:name</td>
-                                    <td class="p-3 text-slate-500">ResourcePermissionMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Maps resource actions
-                                        automatically to CRUD permissions.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permission.team</td>
-                                    <td class="p-3 text-slate-500">TeamMiddleware</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Extracts team ID,
-                                        checks user membership, sets request context.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+// Auto-bind Resource controller CRUD
+Route::resource('billing', BillingController::class)->can('billing');</code></pre>
                     </div>
                 </section>
 
-                <!-- Section: Resource Protection -->
-                <section id="resource-protection" class="mb-14 scroll-mt-20">
+                <section id="resource-protection" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Resource Controller Protection
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Resource Controller Mapping
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Instead of writing authorization boilerplate in every controller action, simply chain <code
-                            class="text-brand-500">can('resource')</code> to your <code
-                            class="text-brand-500">Route::resource()</code> declaration:
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Chaining <code class="font-mono text-brand-600 dark:text-brand-400">can('resource')</code> maps
+                        standard controller methods automatically:
                     </p>
 
-                    <div class="code-container mb-4">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre
-                            class="language-php"><code>Route::resource('users', UserController::class)->can('users');</code></pre>
-                    </div>
-
-                    <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">The middleware automatically checks the
-                        following mappings per action:</p>
-
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs mb-6">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs mb-6 font-mono">
                         <div
-                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center">
-                            <div class="font-mono text-slate-400 mb-1">index / show</div>
-                            <div class="font-mono font-bold text-brand-500">users.view</div>
+                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30 text-center">
+                            <span class="block text-slate-400 text-[10px] uppercase font-sans font-semibold mb-1">index
+                                / show</span>
+                            <span class="text-brand-600 dark:text-brand-400 font-bold">users.view</span>
                         </div>
                         <div
-                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center">
-                            <div class="font-mono text-slate-400 mb-1">create / store</div>
-                            <div class="font-mono font-bold text-brand-500">users.create</div>
+                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30 text-center">
+                            <span class="block text-slate-400 text-[10px] uppercase font-sans font-semibold mb-1">create
+                                / store</span>
+                            <span class="text-brand-600 dark:text-brand-400 font-bold">users.create</span>
                         </div>
                         <div
-                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center">
-                            <div class="font-mono text-slate-400 mb-1">edit / update</div>
-                            <div class="font-mono font-bold text-brand-500">users.update</div>
+                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30 text-center">
+                            <span class="block text-slate-400 text-[10px] uppercase font-sans font-semibold mb-1">edit /
+                                update</span>
+                            <span class="text-brand-600 dark:text-brand-400 font-bold">users.update</span>
                         </div>
                         <div
-                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-center">
-                            <div class="font-mono text-slate-400 mb-1">destroy</div>
-                            <div class="font-mono font-bold text-brand-500">users.delete</div>
+                            class="p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30 text-center">
+                            <span
+                                class="block text-slate-400 text-[10px] uppercase font-sans font-semibold mb-1">destroy</span>
+                            <span class="text-brand-600 dark:text-brand-400 font-bold">users.delete</span>
                         </div>
                     </div>
                 </section>
 
-                <!-- Section: Gate & Policy Integration -->
-                <section id="gate-policy-integration" class="mb-14 scroll-mt-20">
+                <section id="gate-policy-integration" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Gate & Policy Integration
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Gate & Policy Integration
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission registers a <code class="text-brand-500">Gate::before</code>
-                        callback during boot. This provides seamless, non-intrusive interoperability with native Laravel
-                        authorization methods:
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        The package registers a non-intrusive <code
+                            class="font-mono text-brand-600 dark:text-brand-400">Gate::before</code> hook. If an ability
+                        check matches an existing package permission, it is resolved immediately; otherwise, it returns
+                        <code class="text-slate-400 font-mono">null</code>, allowing execution to proceed down to your
+                        custom Laravel Policies.
                     </p>
 
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre class="language-php"><code>// 1. Direct permission checks with Gate & authorize
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>Policy Inference</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
+                        <pre class="language-php"><code>// 1. Direct permission checks
 Gate::allows('users.update');
 $this->authorize('users.update');
 
-// 2. Eloquent Model Policy inference
-// If you authorize a Model instance, the package derives the resource name from $model->getTable()
-$post = Post::find(1);
+// 2. Eloquent Model inference
+// Automatically infers resource from $model->getTable()
+$post = Post::findOrFail($id);
 $this->authorize('update', $post); // Checks 'posts.update'
-$this->authorize('view', $post);   // Checks 'posts.view'
 $this->authorize('delete', $post); // Checks 'posts.delete'</code></pre>
                     </div>
-
-                    <div
-                        class="rounded-xl p-4 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 mb-6 text-sm">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Custom Model-to-Resource Mapping</h4>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs mb-3">If a model's table name does not
-                            match the desired permission slug prefix, define an explicit mapping in <code
-                                class="text-brand-500">config/permission.php</code>:</p>
-                        <pre class="language-php"><code>'policies' => [
-    'map' => [
-        App\Models\Invoice::class => 'billing.invoices',
-    ],
-],</code></pre>
-                        <p class="text-slate-500 dark:text-slate-400 text-xs mt-2">Now <code
-                                class="text-brand-500">$this-&gt;authorize('update', $invoice)</code> checks <code
-                                class="text-brand-500">billing.invoices.update</code> automatically.</p>
-                    </div>
-
-                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm">
-                        <strong>Fallback guarantee:</strong> If the package does not explicitly grant the ability, the
-                        <code class="text-brand-500">Gate::before</code> hook returns <code
-                            class="text-slate-400">null</code>, allowing execution to proceed down to your custom
-                        Laravel Policy classes without obstruction.
-                    </p>
                 </section>
 
-                <!-- Section: Multi-Tenancy & Teams -->
-                <section id="multi-tenancy-teams" class="mb-14 scroll-mt-20">
+                <section id="multi-tenancy-teams" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Multi-Tenancy & Teams
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Teams & Multi-Tenancy
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Enterprise apps often require multi-tenant permissions: a user might be a <code
-                            class="text-brand-500">manager</code> in Team Alpha, but an <code
-                            class="text-brand-500">editor</code> in Team Beta.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Users can hold distinct roles across multiple tenant teams. Assign abilities globally or
+                        strictly scoped to a team ID:
                     </p>
 
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre class="language-php"><code>use Codesuab\Permission\Models\Team;
-
-// 1. Create a Team and attach members
-$team = Team::createTeam('Acme Corp', ownerId: $owner->id);
-$owner->addToTeam($team);
-$user->addToTeam($team);
-
-// 2. Assign role within specific team scope
-$user->assignRole('manager', teamId: $team->id);
-
-// 3. Grant direct permission within team scope
-$user->givePermissionTo('invoices.refund', teamId: $team->id);
-
-// 4. Check permissions within team context
-app('permission')->team($team->id)->check($user, 'invoices.refund'); // returns true
-team_permission($team->id, 'invoices.refund'); // via helper</code></pre>
-                    </div>
-
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Team Routing Middleware</h3>
-                    <p class="text-slate-600 dark:text-slate-300 text-sm mb-4">
-                        Protect tenant routes by wrapping them with the <code
-                            class="text-brand-500">permission.team</code> middleware:
-                    </p>
-
-                    <div class="code-container mb-4">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre class="language-php"><code>Route::middleware('permission.team')->group(function () {
-    Route::resource('/teams/{team}/projects', TeamProjectController::class)->can('projects');
-});</code></pre>
-                    </div>
-
-                    <div
-                        class="p-4 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 space-y-2">
-                        <div><strong>Lifecycle & Safety:</strong></div>
-                        <ul class="list-disc list-inside space-y-1">
-                            <li>Middleware resolves <code class="text-slate-800 dark:text-slate-200">{team}</code> from
-                                the route parameters (model or integer ID).</li>
-                            <li>When <code class="text-slate-800 dark:text-slate-200">require_membership => true</code>,
-                                unauthenticated requests abort 401, and non-members abort 403.</li>
-                            <li>Sets <code class="text-slate-800 dark:text-slate-200">TeamContext</code> for the active
-                                request and clears it safely inside a <code
-                                    class="text-slate-800 dark:text-slate-200">finally</code> block.</li>
-                            <li>When <code class="text-slate-800 dark:text-slate-200">global_permissions => true</code>,
-                                permissions granted without a team ID remain valid across all teams.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Section: ACL Matrix -->
-                <section id="acl-matrix" class="mb-14 scroll-mt-20">
-                    <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> ACL Matrix API & React UI
-                    </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Build role-permission management matrices with zero manual pivot querying. The <code
-                            class="text-brand-500">AclMatrix</code> service exports a structured matrix and syncs
-                        updates cleanly.
-                    </p>
-
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre class="language-php"><code>use Codesuab\Permission\Support\AclMatrix;
-
-// 1. Build matrix data for an administrative panel (or tenant)
-$matrixData = app(AclMatrix::class)->build($teamId = null);
-
-// Returns structure:
-// [
-//   'roles' => [['id' => 1, 'name' => 'Admin', 'slug' => 'admin'], ...],
-//   'permissions' => [['id' => 1, 'name' => 'Users View', 'slug' => 'users.view', 'group' => 'users'], ...],
-//   'matrix' => [
-//       'admin' => ['users.view', 'users.create', 'users.*'],
-//       'manager' => ['users.view'],
-//   ]
-// ]
-
-// 2. Sync all permissions for a role
-app(AclMatrix::class)->sync($role, ['users.view', 'users.create'], $teamId);
-
-// 3. Toggle a single permission
-app(AclMatrix::class)->set($role, 'users.delete', allowed: true, teamId: $teamId);</code></pre>
-                    </div>
-
-                    <!-- Interactive ACL Matrix Preview Demo -->
-                    <div
-                        class="border border-slate-200 dark:border-slate-800 rounded-xl p-5 bg-white dark:bg-slate-900 shadow-sm mb-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h4 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                Interactive ACL Matrix Component Preview
-                            </h4>
-                            <span class="text-[11px] font-mono text-slate-400">Live Browser Demo</span>
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>Team Isolation</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
                         </div>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full text-xs text-left" id="interactive-matrix">
+                        <pre class="language-php"><code>use Permission\Models\Team;
+
+$teamA = Team::createTeam('Acme North');
+$teamB = Team::createTeam('Acme South');
+
+// Assign role scoped specifically to Team A
+$user->assignRole('manager', teamId: $teamA->id);
+
+// Checking access scoped to team context
+app('permission')->team($teamA->id)->check($user, 'invoices.refund'); // true
+app('permission')->team($teamB->id)->check($user, 'invoices.refund'); // false</code></pre>
+                    </div>
+                </section>
+
+                <section id="acl-matrix" class="mb-12 scroll-mt-20">
+                    <h2
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        ACL Matrix Service & Preview
+                    </h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        The <code class="font-mono text-brand-600 dark:text-brand-400">AclMatrix</code> service exports
+                        role-permission matrices without manual pivot queries:
+                    </p>
+
+                    <!-- Clean interactive Matrix UI -->
+                    <div
+                        class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-neutral-900/40 shadow-xs mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div>
+                                <div class="font-semibold text-xs text-slate-900 dark:text-white">Role Permission Matrix
+                                </div>
+                                <div class="text-[11px] text-slate-400">Interactive live demo</div>
+                            </div>
+                            <button onclick="resetMatrixDemo()"
+                                class="text-[11px] font-mono px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 transition">Reset</button>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
+                            <table class="w-full text-xs text-left" id="matrix-table">
                                 <thead
-                                    class="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+                                    class="bg-slate-50 dark:bg-neutral-900 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800 text-[11px]">
                                     <tr>
-                                        <th class="p-2.5 font-bold text-slate-700 dark:text-slate-300">Permission</th>
-                                        <th class="p-2.5 font-bold text-slate-700 dark:text-slate-300 text-center">Super
-                                            Admin</th>
-                                        <th class="p-2.5 font-bold text-slate-700 dark:text-slate-300 text-center">
-                                            Manager</th>
-                                        <th class="p-2.5 font-bold text-slate-700 dark:text-slate-300 text-center">
-                                            Editor</th>
-                                        <th class="p-2.5 font-bold text-slate-700 dark:text-slate-300 text-center">
-                                            Viewer</th>
+                                        <th class="p-2.5 font-medium">Permission</th>
+                                        <th class="p-2.5 font-medium text-center">Super Admin</th>
+                                        <th class="p-2.5 font-medium text-center">Manager</th>
+                                        <th class="p-2.5 font-medium text-center">Editor</th>
+                                        <th class="p-2.5 font-medium text-center">Viewer</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-mono">
-                                    <tr>
-                                        <td class="p-2.5 text-slate-700 dark:text-slate-300">users.view</td>
+                                <tbody
+                                    class="divide-y divide-slate-200/80 dark:divide-slate-800/80 font-mono text-[11px]">
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-neutral-850/50">
+                                        <td class="p-2.5 font-medium text-slate-700 dark:text-slate-300">users.view</td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked disabled
                                                 class="accent-brand-600 rounded"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="manager"
+                                                data-perm="users.view"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="editor"
+                                                data-perm="users.view"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="viewer"
+                                                data-perm="users.view"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="p-2.5 text-slate-700 dark:text-slate-300">users.create</td>
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-neutral-850/50">
+                                        <td class="p-2.5 font-medium text-slate-700 dark:text-slate-300">users.create
+                                        </td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked disabled
                                                 class="accent-brand-600 rounded"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="manager"
+                                                data-perm="users.create"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="editor"
+                                                data-perm="users.create"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="viewer"
+                                                data-perm="users.create"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="p-2.5 text-slate-700 dark:text-slate-300">users.update</td>
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-neutral-850/50">
+                                        <td class="p-2.5 font-medium text-slate-700 dark:text-slate-300">users.update
+                                        </td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked disabled
                                                 class="accent-brand-600 rounded"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="manager"
+                                                data-perm="users.update"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="editor"
+                                                data-perm="users.update"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="viewer"
+                                                data-perm="users.update"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="p-2.5 text-slate-700 dark:text-slate-300">users.delete</td>
+                                    <tr class="hover:bg-slate-50/50 dark:hover:bg-neutral-850/50">
+                                        <td class="p-2.5 font-medium text-slate-700 dark:text-slate-300">users.delete
+                                        </td>
                                         <td class="p-2.5 text-center"><input type="checkbox" checked disabled
                                                 class="accent-brand-600 rounded"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="manager"
+                                                data-perm="users.delete"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="editor"
+                                                data-perm="users.delete"></td>
                                         <td class="p-2.5 text-center"><input type="checkbox"
-                                                class="accent-brand-600 rounded"></td>
+                                                class="accent-brand-600 rounded matrix-toggle" data-role="viewer"
+                                                data-perm="users.delete"></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="mt-3 text-[11px] text-slate-400">Rendered via <code
-                                class="text-brand-400">&lt;AclMatrix data={matrix} onChange={...} /&gt;</code> in React.
-                        </div>
                     </div>
                 </section>
 
-                <!-- Section: Blade Directives -->
-                <section id="blade-directives" class="mb-14 scroll-mt-20">
+                <section id="blade-directives" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Blade Directives
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Blade Directives
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission ships with pre-compiled Blade directives that conditionally render
-                        blocks based on the authenticated user's authorization state.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Pre-compiled directives for conditional view rendering:
                     </p>
 
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-                        <pre class="language-blade"><code>{{-- Single permission check --}}
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>resources/views/dashboard.blade.php</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
+                        <pre class="language-blade"><code>{{-- Check single ability --}}
 @permission('users.create')
     &lt;button class="btn"&gt;Create User&lt;/button&gt;
 @endpermission
 
-{{-- Any permission check (OR) --}}
-@anypermission('users.edit', 'users.update')
-    &lt;a href="/users/edit"&gt;Edit User&lt;/a&gt;
+{{-- Check any listed permission (OR) --}}
+@anypermission('reports.view', 'analytics.view')
+    &lt;a href="/reports"&gt;Reports Center&lt;/a&gt;
 @endanypermission
 
-{{-- All permissions check (AND) --}}
-@allpermissions('reports.view', 'reports.export')
-    &lt;button&gt;Export Financial Summary&lt;/button&gt;
+{{-- Check all listed permissions (AND) --}}
+@allpermissions('billing.view', 'billing.export')
+    &lt;button&gt;Download Statements&lt;/button&gt;
 @endallpermissions
 
-{{-- Single role check --}}
+{{-- Role checks --}}
 @role('admin')
-    &lt;div&gt;Welcome to Super Admin Console&lt;/div&gt;
-@endrole
-
-{{-- Any role check (OR) --}}
-@anyrole('admin', 'manager')
-    &lt;div&gt;Management Dashboard&lt;/div&gt;
-@endanyrole
-
-{{-- All roles check (AND) --}}
-@allroles('admin', 'security-officer')
-    &lt;div&gt;System Audit Logs&lt;/div&gt;
-@endallroles</code></pre>
+    &lt;div&gt;Super Admin Console&lt;/div&gt;
+@endrole</code></pre>
                     </div>
                 </section>
 
-                <!-- Section: Inertia & React -->
-                <section id="inertia-react" class="mb-14 scroll-mt-20">
+                <section id="inertia-react" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Inertia.js React Adapter
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Inertia React SDK
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        When Inertia is detected, the package automatically shares <code
-                            class="text-brand-500">auth.permissions</code>, <code
-                            class="text-brand-500">auth.roles</code>, and active <code
-                            class="text-brand-500">auth.team</code> with the frontend on every request.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        When Inertia is present, permissions and roles are automatically shared with the frontend on
+                        every request:
                     </p>
 
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">React Components & Hook Usage</h3>
-                    <div class="code-container mb-6">
-                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-6">
+                        <div
+                            class="flex items-center justify-between px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>Navigation.tsx</span>
+                            <button class="hover:text-white transition" onclick="copySnippet(this)">Copy</button>
+                        </div>
                         <pre class="language-tsx"><code>import React from 'react';
-import { 
-    Can, 
-    CanAny, 
-    CanAll, 
-    Role, 
-    usePermissions,
-    filterByPermission 
-} from '@codesuab/laravel-permission';
+import { Can, CanAny, Role, usePermissions } from '@permission/react';
 
 export function Navigation() {
-    const { can, canAny, hasRole, permissions, roles, teamId } = usePermissions();
+    const { can, hasRole } = usePermissions();
 
     return (
-        &lt;nav&gt;
-            {/* Conditional component rendering */}
-            &lt;Can permission="users.create" fallback={&lt;span&gt;Upgrade to Invite Users&lt;/span&gt;}&gt;
-                &lt;button&gt;Invite User&lt;/button&gt;
+        &lt;nav className="flex items-center gap-4"&gt;
+            {/* Conditional wrapper */}
+            &lt;Can permission="users.create" fallback={&lt;span&gt;Upgrade plan&lt;/span&gt;}&gt;
+                &lt;button&gt;Invite Teammate&lt;/button&gt;
             &lt;/Can&gt;
 
-            &lt;CanAny permissions={['reports.view', 'analytics.view']}&gt;
-                &lt;a href="/insights"&gt;Insights&lt;/a&gt;
-            &lt;/CanAny&gt;
+            {/* Direct hook evaluation */}
+            {can('invoices.refund') && &lt;button&gt;Issue Refund&lt;/button&gt;}
 
             &lt;Role role="admin"&gt;
-                &lt;a href="/admin"&gt;Admin Console&lt;/a&gt;
+                &lt;a href="/admin/settings"&gt;Admin Console&lt;/a&gt;
             &lt;/Role&gt;
-
-            {/* Direct hook checks */}
-            {can('invoices.refund') &amp;&amp; &lt;button&gt;Issue Refund&lt;/button&gt;}
         &lt;/nav&gt;
     );
-}
-
-// Filter dynamic navigation arrays safely
-const navItems = [
-    { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Users', href: '/users', permission: 'users.view' },
-    { title: 'Billing', href: '/billing', role: 'finance' },
-];
-
-const visibleItems = filterByPermission(navItems, can, hasRole);</code></pre>
+}</code></pre>
                     </div>
+                </section>
 
-                    <div
-                        class="p-4 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50/70 dark:bg-red-950/20 text-red-900 dark:text-red-200 text-xs sm:text-sm flex gap-3">
-                        <svg class="w-5 h-5 flex-shrink-0 text-red-500 mt-0.5" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        <div>
-                            <strong>Crucial Security Notice:</strong> Client-side React checks are strictly UI helpers
-                            for conditional rendering and user experience. <strong>Never</strong> rely on frontend
-                            checks as a security boundary. Always enforce authorization on the backend via Laravel
-                            Middleware, Gates, and Policies!
+                <section id="cli-commands" class="mb-12 scroll-mt-20">
+                    <h2
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Artisan CLI Commands
+                    </h2>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <code
+                                class="font-mono font-semibold text-brand-600 dark:text-brand-400">permission:install</code>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Publishes configuration file and runs
+                                initial database migrations.</p>
+                        </div>
+                        <div
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <code
+                                class="font-mono font-semibold text-brand-600 dark:text-brand-400">permission:seed</code>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Seeds wildcard `*` ability and assigns it
+                                to the `super-admin` role.</p>
+                        </div>
+                        <div
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <code
+                                class="font-mono font-semibold text-brand-600 dark:text-brand-400">permission:make {res} --crud</code>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Scaffolds view, create, update, and
+                                delete actions for a resource.</p>
+                        </div>
+                        <div
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <code
+                                class="font-mono font-semibold text-brand-600 dark:text-brand-400">permission:sync-routes</code>
+                            <p class="text-slate-500 dark:text-slate-400 mt-1">Inspects application routing table and
+                                generates missing permissions.</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- Section: CLI Commands -->
-                <section id="cli-commands" class="mb-14 scroll-mt-20">
+                <section id="helpers" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Artisan CLI Commands
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Global Helper Functions
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Codesuab Laravel Permission bundles several purpose-built Artisan commands for setup,
-                        maintenance, and route discovery.
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Composer automatically autoloads helper functions in <code
+                            class="font-mono text-brand-600 dark:text-brand-400">src/helpers.php</code>:
                     </p>
 
-                    <div class="space-y-4">
-                        <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div class="flex items-center justify-between mb-2">
-                                <span
-                                    class="font-mono text-sm font-bold text-brand-600 dark:text-brand-400">permission:install
-                                    {--force}</span>
-                                <span
-                                    class="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">Setup</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-2">Publishes the <code
-                                    class="text-brand-500">permission-config</code> tag and runs database migrations.
-                            </p>
-                            <pre class="language-bash"><code>php artisan permission:install</code></pre>
-                        </div>
-
-                        <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div class="flex items-center justify-between mb-2">
-                                <span
-                                    class="font-mono text-sm font-bold text-brand-600 dark:text-brand-400">permission:seed</span>
-                                <span
-                                    class="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">Seeding</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-2">Creates the wildcard
-                                permission <code class="text-brand-500">*</code> and sets up the active system <code
-                                    class="text-brand-500">super-admin</code> role.</p>
-                            <pre class="language-bash"><code>php artisan permission:seed</code></pre>
-                        </div>
-
-                        <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div class="flex items-center justify-between mb-2">
-                                <span
-                                    class="font-mono text-sm font-bold text-brand-600 dark:text-brand-400">permission:make
-                                    {resources*} {--crud}</span>
-                                <span
-                                    class="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">Scaffolding</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-2">Creates permissions on
-                                the fly. Passing <code class="text-brand-500">--crud</code> expands each resource into
-                                view, create, update, and delete actions.</p>
-                            <pre class="language-bash"><code># Generate CRUD permissions for users and products
-php artisan permission:make users products --crud
-
-# Output:
-# ✓ users.view
-# ✓ users.create
-# ✓ users.update
-# ✓ users.delete
-# ✓ products.view
-# ...</code></pre>
-                        </div>
-
-                        <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div class="flex items-center justify-between mb-2">
-                                <span
-                                    class="font-mono text-sm font-bold text-brand-600 dark:text-brand-400">permission:sync-routes</span>
-                                <span
-                                    class="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500">Introspection</span>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-2">Inspects registered
-                                resource routes in your Laravel application and automatically ensures corresponding CRUD
-                                permissions exist in the database.</p>
-                            <pre class="language-bash"><code>php artisan permission:sync-routes</code></pre>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Section: Global Helper Functions -->
-                <section id="helpers" class="mb-14 scroll-mt-20">
-                    <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Global Helper Functions
-                    </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        The package includes helper functions in <code class="text-brand-500">src/helpers.php</code>
-                        autoloaded by Composer for convenient global access:
-                    </p>
-
-                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 mb-6">
-                        <table class="w-full text-left text-xs sm:text-sm">
+                    <div class="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800 mb-6">
+                        <table class="w-full text-left text-xs">
                             <thead
-                                class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
+                                class="bg-slate-50 dark:bg-neutral-900 text-slate-600 dark:text-slate-300 border-b border-slate-200 dark:border-slate-800">
                                 <tr>
-                                    <th class="p-3">Function Signature</th>
-                                    <th class="p-3">Return</th>
-                                    <th class="p-3">Purpose</th>
+                                    <th class="p-3 font-semibold">Helper</th>
+                                    <th class="p-3 font-semibold">Return</th>
+                                    <th class="p-3 font-semibold">Description</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 font-mono text-xs">
+                            <tbody class="divide-y divide-slate-200/80 dark:divide-slate-800/80 font-mono text-[11px]">
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permission(string
-                                        $name)</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">permission($name)
+                                    </td>
                                     <td class="p-3 text-emerald-500">bool</td>
                                     <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks permission for
-                                        the current <code class="text-brand-500">auth()-&gt;user()</code>.</td>
+                                        currently authenticated user.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permission_any(array
-                                        $names)</td>
-                                    <td class="p-3 text-emerald-500">bool</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if current
-                                        authenticated user has any of the permissions.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">permission_all(array
-                                        $names)</td>
-                                    <td class="p-3 text-emerald-500">bool</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if current
-                                        authenticated user has all permissions.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">role(string $name)</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">role($name)</td>
                                     <td class="p-3 text-emerald-500">bool</td>
                                     <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks if current user
-                                        has the specified role.</td>
+                                        possesses role.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">
                                         team_permission($teamId, $name)</td>
                                     <td class="p-3 text-emerald-500">bool</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks permission for
-                                        current user scoped to the given team ID.</td>
+                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Checks permission
+                                        scoped to a specific team ID.</td>
                                 </tr>
                                 <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">team(int|string $id)
-                                    </td>
-                                    <td class="p-3 text-emerald-500">Team</td>
-                                    <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Resolves team model via
-                                        <code class="text-brand-500">Team::findOrFail($id)</code>.</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-bold">
-                                        authorize_permission(string $name)</td>
+                                    <td class="p-3 text-brand-600 dark:text-brand-400 font-semibold">
+                                        authorize_permission($name)</td>
                                     <td class="p-3 text-slate-400">void</td>
                                     <td class="p-3 font-sans text-slate-600 dark:text-slate-300">Throws <code
-                                            class="text-red-500">PermissionDeniedException</code> if unauthorized.</td>
+                                            class="text-rose-500 font-mono">PermissionDeniedException</code> if
+                                        unauthorized.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- Section: Database Schema -->
-                <section id="database-schema" class="mb-14 scroll-mt-20">
+                <section id="database-schema" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Database Schema
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Database Schema
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        The package creates 7 normalized tables designed for high query throughput, foreign key
-                        integrity, and index optimization:
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        Normalized tables optimized with composite indexes for sub-millisecond evaluation:
                     </p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs font-mono">
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div
-                                class="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center justify-between">
-                                <span>roles</span>
-                                <span class="text-[10px] text-slate-400 font-normal">Primary Table</span>
-                            </div>
-                            <ul class="space-y-1 text-slate-600 dark:text-slate-400">
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-bold text-slate-900 dark:text-white mb-1.5">roles</div>
+                            <ul class="space-y-1 text-slate-500 text-[11px]">
                                 <li><strong class="text-brand-500">id</strong>: bigint unsigned (PK)</li>
                                 <li><strong>name</strong>: varchar(255)</li>
-                                <li><strong>slug</strong>: varchar(255) (unique index)</li>
-                                <li><strong>description</strong>: text nullable</li>
-                                <li><strong>is_system</strong>: boolean (default false)</li>
-                                <li><strong>is_active</strong>: boolean (default true)</li>
-                                <li><strong>timestamps</strong></li>
+                                <li><strong>slug</strong>: varchar(255) [UNIQUE]</li>
+                                <li><strong>is_system</strong>: boolean</li>
                             </ul>
                         </div>
 
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div
-                                class="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center justify-between">
-                                <span>permissions</span>
-                                <span class="text-[10px] text-slate-400 font-normal">Primary Table</span>
-                            </div>
-                            <ul class="space-y-1 text-slate-600 dark:text-slate-400">
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-bold text-slate-900 dark:text-white mb-1.5">permissions</div>
+                            <ul class="space-y-1 text-slate-500 text-[11px]">
                                 <li><strong class="text-brand-500">id</strong>: bigint unsigned (PK)</li>
                                 <li><strong>name</strong>: varchar(255)</li>
-                                <li><strong>slug</strong>: varchar(255) (unique index)</li>
+                                <li><strong>slug</strong>: varchar(255) [UNIQUE]</li>
                                 <li><strong>group</strong>: varchar(255) nullable</li>
-                                <li><strong>description</strong>: text nullable</li>
-                                <li><strong>is_system</strong>: boolean (default false)</li>
-                                <li><strong>timestamps</strong></li>
                             </ul>
                         </div>
 
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div
-                                class="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center justify-between">
-                                <span>teams</span>
-                                <span class="text-[10px] text-slate-400 font-normal">Tenancy</span>
-                            </div>
-                            <ul class="space-y-1 text-slate-600 dark:text-slate-400">
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-bold text-slate-900 dark:text-white mb-1.5">teams</div>
+                            <ul class="space-y-1 text-slate-500 text-[11px]">
                                 <li><strong class="text-brand-500">id</strong>: bigint unsigned (PK)</li>
                                 <li><strong>name</strong>: varchar(255)</li>
-                                <li><strong>slug</strong>: varchar(255) (unique index)</li>
-                                <li><strong>owner_id</strong>: foreignId nullable</li>
-                                <li><strong>meta</strong>: json nullable</li>
-                                <li><strong>is_active</strong>: boolean (default true)</li>
-                                <li><strong>timestamps</strong></li>
+                                <li><strong>slug</strong>: varchar(255) [UNIQUE]</li>
+                                <li><strong>owner_id</strong>: foreignId</li>
                             </ul>
                         </div>
 
                         <div
-                            class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
-                            <div
-                                class="font-bold text-slate-900 dark:text-white text-sm mb-2 flex items-center justify-between">
-                                <span>role_permissions</span>
-                                <span class="text-[10px] text-slate-400 font-normal">Pivot</span>
-                            </div>
-                            <ul class="space-y-1 text-slate-600 dark:text-slate-400">
-                                <li><strong>role_id</strong>: foreignId cascade</li>
-                                <li><strong>permission_id</strong>: foreignId cascade</li>
-                                <li><strong>team_id</strong>: foreignId nullable cascade</li>
-                                <li><em class="text-slate-400 font-sans">Indexed on [role_id, team_id]</em></li>
-                                <li><em class="text-slate-400 font-sans">Indexed on [permission_id, team_id]</em></li>
+                            class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/30">
+                            <div class="font-bold text-slate-900 dark:text-white mb-1.5">role_permissions</div>
+                            <ul class="space-y-1 text-slate-500 text-[11px]">
+                                <li><strong>role_id</strong> + <strong>permission_id</strong></li>
+                                <li><strong>team_id</strong>: foreignId nullable</li>
+                                <li>[INDEX: role_id, team_id]</li>
                             </ul>
                         </div>
                     </div>
                 </section>
 
-                <!-- Section: Caching & Performance -->
-                <section id="caching-performance" class="mb-14 scroll-mt-20">
+                <section id="caching-performance" class="mb-12 scroll-mt-20">
                     <h2
-                        class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4 flex items-center gap-2">
-                        <span class="text-brand-500">#</span> Caching & Invalidation Architecture
+                        class="text-lg font-bold text-slate-900 dark:text-white tracking-tight mb-3 flex items-center gap-2">
+                        <span class="text-slate-400 dark:text-slate-600 font-mono text-sm">#</span>
+                        Caching & Invalidation
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                        Permission lookups are cached automatically to prevent N+1 query overhead. The cache key
-                        separates user identifiers and team context:
+                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                        All resolved abilities are cached contextually to eliminate duplicate database queries:
                     </p>
 
-                    <div class="code-container mb-4">
+                    <div class="code-box rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden mb-4">
+                        <div
+                            class="px-3 py-1.5 bg-neutral-925 border-b border-slate-800 text-[10px] font-mono text-slate-400">
+                            <span>Cache Key Format</span>
+                        </div>
                         <pre class="language-text"><code>{prefix}:user:{user_id}:team:{team_id|global}
-Example: codesuab.permission:user:42:team:5</code></pre>
+Example: app.permission:user:14:team:2</code></pre>
                     </div>
 
-                    <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Automatic Cache Invalidation
-                    </h3>
-                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-3">
-                        Whenever any of the following events occur, cache entries are invalidated automatically without
-                        manual intervention:
+                    <p class="text-xs text-slate-500 dark:text-slate-400">
+                        <strong>Automatic Invalidation:</strong> Changes to roles, permissions, or assignments
+                        immediately evict corresponding cache tags for affected users.
                     </p>
-                    <ul
-                        class="list-disc list-inside text-xs sm:text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-4">
-                        <li>Assigning, detaching, or syncing roles on a User (<code
-                                class="text-brand-500">clear($user)</code>).</li>
-                        <li>Granting, revoking, or syncing direct permissions on a User (<code
-                                class="text-brand-500">clear($user)</code>).</li>
-                        <li>Updating role permissions via <code class="text-brand-500">$role-&gt;allow()</code> or <code
-                                class="text-brand-500">$role-&gt;syncPermissions()</code> clears all users holding that
-                            role.</li>
-                        <li>ACL Matrix updates trigger automatic user cache clearing.</li>
-                    </ul>
-
-                    <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs">
-                        <div class="font-mono text-brand-400 mb-1">Manual Cache Clearing:</div>
-                        <pre class="language-php"><code>// Clear specific user
-app('permission')->clear($user);
-
-// Clear all users holding a role
-app('permission')->clearRole($role);</code></pre>
-                    </div>
                 </section>
 
-                <!-- Section: Interactive Wildcard & Permission Tester Playground -->
-                <section id="playground" class="mb-14 scroll-mt-20">
+                <section id="playground" class="mb-12 scroll-mt-20">
                     <div
-                        class="rounded-2xl border border-brand-200 dark:border-brand-800/80 bg-gradient-to-b from-brand-50/50 to-transparent dark:from-brand-950/20 p-6 shadow-sm">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-brand-500 animate-ping"></span>
-                            <h2 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Interactive
-                                Wildcard Playground</h2>
+                        class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-neutral-900/50 p-5 shadow-xs">
+                        <div class="font-bold text-sm text-slate-900 dark:text-white mb-1">Interactive Wildcard Sandbox
                         </div>
-                        <p class="text-slate-600 dark:text-slate-300 text-sm mb-6">
-                            Test how the package's exact regex matching engine resolves wildcard expressions against
-                            requested permissions in real time.
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                            Simulate the package's exact regex matching engine in real time.
                         </p>
 
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <!-- Inputs -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-4">
                             <div>
                                 <label for="tester-granted"
-                                    class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Granted
-                                    Pattern (on Role/User):</label>
+                                    class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Granted
+                                    Ability (Pattern)</label>
                                 <input type="text" id="tester-granted" value="users.*"
-                                    class="w-full px-3 py-2 text-sm font-mono bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                                <span class="text-[11px] text-slate-400">Try: <code
-                                        class="text-brand-500 cursor-pointer"
-                                        onclick="setPlayground('users.*', 'users.view')">users.*</code>, <code
-                                        class="text-brand-500 cursor-pointer"
-                                        onclick="setPlayground('*', 'billing.invoices.export')">*</code>, <code
-                                        class="text-brand-500 cursor-pointer"
-                                        onclick="setPlayground('billing.?.view', 'billing.1.view')">billing.?.view</code></span>
+                                    class="w-full px-3 py-1.5 text-xs font-mono bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-800 rounded-md text-slate-900 dark:text-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                <div class="flex items-center gap-1.5 mt-1.5 text-[10px] text-slate-400">
+                                    <span>Presets:</span>
+                                    <button class="text-brand-600 dark:text-brand-400 hover:underline"
+                                        onclick="setPlayground('users.*', 'users.view')">users.*</button>
+                                    <span>·</span>
+                                    <button class="text-brand-600 dark:text-brand-400 hover:underline"
+                                        onclick="setPlayground('*', 'billing.invoices.export')">*</button>
+                                    <span>·</span>
+                                    <button class="text-brand-600 dark:text-brand-400 hover:underline"
+                                        onclick="setPlayground('posts.?.view', 'posts.1.view')">posts.?.view</button>
+                                </div>
                             </div>
 
                             <div>
                                 <label for="tester-requested"
-                                    class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Requested
-                                    Permission (in Route/Gate):</label>
+                                    class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Target
+                                    Action (Requested)</label>
                                 <input type="text" id="tester-requested" value="users.view"
-                                    class="w-full px-3 py-2 text-sm font-mono bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-brand-500 focus:outline-none">
-                                <span class="text-[11px] text-slate-400">Target action being authorized.</span>
+                                    class="w-full px-3 py-1.5 text-xs font-mono bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-800 rounded-md text-slate-900 dark:text-white focus:ring-1 focus:ring-brand-500 focus:outline-none">
+                                <span class="text-[10px] text-slate-400 mt-1.5 block">Action checked via <code
+                                        class="font-mono">can()</code> or <code class="font-mono">Gate</code>.</span>
                             </div>
                         </div>
 
-                        <!-- Result Box -->
+                        <!-- Result Display Box -->
                         <div id="tester-result"
-                            class="p-4 rounded-xl border flex items-center justify-between transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
-                            <div class="flex items-center gap-3">
+                            class="p-3 rounded-lg border flex items-center justify-between transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+                            <div class="flex items-center gap-2.5">
                                 <div id="tester-icon"
-                                    class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold">
+                                    class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold text-[10px]">
                                     ✓</div>
                                 <div>
-                                    <div id="tester-status" class="font-bold text-sm">ALLOW — Permission Granted</div>
-                                    <div id="tester-detail" class="text-xs font-mono opacity-80">Pattern "users.*"
+                                    <div id="tester-status" class="font-semibold text-xs">ALLOW — Access Granted</div>
+                                    <div id="tester-detail" class="text-[11px] font-mono opacity-80">Pattern "users.*"
                                         matches "users.view"</div>
                                 </div>
                             </div>
-                            <span class="text-xs font-mono px-2 py-1 rounded bg-slate-900 text-slate-200">regex
-                                match</span>
+                            <span
+                                class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-900 text-slate-200">regex</span>
                         </div>
                     </div>
                 </section>
 
+                <footer
+                    class="pt-6 border-t border-slate-200/80 dark:border-slate-800/80 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <p>© MIT License.</p>
+                    <div class="flex items-center gap-3">
+                        <a href="#overview"
+                            class="hover:text-slate-600 dark:hover:text-slate-300 transition">Overview</a>
+                        <a href="#installation"
+                            class="hover:text-slate-600 dark:hover:text-slate-300 transition">Installation</a>
+                        <a href="#playground"
+                            class="hover:text-slate-600 dark:hover:text-slate-300 transition">Sandbox</a>
+                    </div>
+                </footer>
+
             </main>
 
-            <!-- Right On-This-Page TOC -->
-            <aside class="hidden xl:block w-56 flex-shrink-0">
-                <div class="sticky top-24 space-y-4">
-                    <div class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">On This
-                        Page</div>
-                    <ul class="space-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium" id="page-toc">
+            <aside class="hidden xl:block w-48 flex-shrink-0">
+                <div class="sticky top-20 space-y-2.5 text-xs">
+                    <div class="font-semibold uppercase tracking-wider text-[10px] text-slate-400 dark:text-slate-500">
+                        On this page</div>
+                    <ul class="space-y-1 text-slate-500 dark:text-slate-400 font-medium" id="page-toc">
                         <li><a href="#overview"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Overview</a>
-                        </li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Overview</a></li>
                         <li><a href="#installation"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Installation &
-                                Setup</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Installation</a>
+                        </li>
                         <li><a href="#configuration"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Configuration</a>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Configuration</a>
                         </li>
                         <li><a href="#models-and-traits"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">User Model
+                                class="hover:text-slate-900 dark:hover:text-white transition block">User Model
                                 Traits</a></li>
                         <li><a href="#permissions-and-roles"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Permissions &
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Permissions &
                                 Roles</a></li>
                         <li><a href="#wildcards"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Wildcard
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Wildcard
                                 Matching</a></li>
                         <li><a href="#super-admin"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Super Admin</a>
-                        </li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Super Admin</a></li>
                         <li><a href="#route-protection"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Route Macros</a>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Route Macros</a>
                         </li>
-                        <li><a href="#resource-protection"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Resource
-                                Routing</a></li>
                         <li><a href="#gate-policy-integration"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Gate &
-                                Policies</a></li>
-                        <li><a href="#multi-tenancy-teams"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Multi-Tenancy &
-                                Teams</a></li>
-                        <li><a href="#acl-matrix"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">ACL Matrix</a>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Gates & Policies</a>
                         </li>
+                        <li><a href="#multi-tenancy-teams"
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Teams & Tenancy</a>
+                        </li>
+                        <li><a href="#acl-matrix"
+                                class="hover:text-slate-900 dark:hover:text-white transition block">ACL Matrix</a></li>
                         <li><a href="#blade-directives"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Blade
-                                Directives</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Blade Directives</a>
+                        </li>
                         <li><a href="#inertia-react"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Inertia
-                                React</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Inertia React</a>
+                        </li>
                         <li><a href="#cli-commands"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Artisan
-                                Commands</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Artisan CLI</a></li>
                         <li><a href="#helpers"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Helper
-                                Functions</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Global Helpers</a>
+                        </li>
                         <li><a href="#database-schema"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Database
-                                Schema</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Database Schema</a>
+                        </li>
                         <li><a href="#caching-performance"
-                                class="hover:text-brand-600 dark:hover:text-brand-400 transition block">Caching</a></li>
+                                class="hover:text-slate-900 dark:hover:text-white transition block">Caching</a></li>
                         <li><a href="#playground"
-                                class="text-brand-600 dark:text-brand-400 font-semibold block">Playground</a></li>
+                                class="text-brand-600 dark:text-brand-400 font-semibold block">Sandbox</a></li>
                     </ul>
 
-                    <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <div class="pt-3 border-t border-slate-200 dark:border-slate-800">
                         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-                            class="text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 flex items-center gap-1.5 transition">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="text-[11px] text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1 transition">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5 10l7-7m0 0l7 7m-7-7v18" />
                             </svg>
-                            Back to top
+                            <span>Back to top</span>
                         </button>
                     </div>
                 </div>
@@ -1822,18 +1390,37 @@ app('permission')->clearRole($role);</code></pre>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
+    <div id="search-modal"
+        class="fixed inset-0 z-50 bg-neutral-950/60 backdrop-blur-xs hidden items-start justify-center pt-20 px-4">
+        <div
+            class="bg-white dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
+            <div class="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2.5">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="text" id="palette-search-input" placeholder="Search documentation..."
+                    class="w-full bg-transparent text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none">
+                <kbd
+                    class="text-[10px] font-mono px-1 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700">ESC</kbd>
+            </div>
+            <div id="palette-results" class="max-h-80 overflow-y-auto p-2 space-y-1 text-xs">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
     <div id="toast"
-        class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 border border-slate-800">
-        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        class="fixed bottom-5 right-5 z-50 transform translate-y-16 opacity-0 pointer-events-none transition-all duration-200 bg-neutral-900 text-white text-xs font-medium px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 border border-slate-800">
+        <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
         </svg>
         <span id="toast-text">Copied to clipboard</span>
     </div>
 
-    <!-- Scripts -->
     <script>
-        // Theme Management
+        // Color Theme Management
         const themeToggle = document.getElementById('theme-toggle');
         const iconLight = document.getElementById('theme-icon-light');
         const iconDark = document.getElementById('theme-icon-dark');
@@ -1855,52 +1442,72 @@ app('permission')->clearRole($role);</code></pre>
         const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
         updateThemeUI(isDark);
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle?.addEventListener('click', () => {
             const willBeDark = !document.documentElement.classList.contains('dark');
             localStorage.setItem('theme', willBeDark ? 'dark' : 'light');
             updateThemeUI(willBeDark);
         });
 
-        // Mobile Sidebar Toggle
+        // Mobile Sidebar
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const closeSidebarBtn = document.getElementById('close-sidebar-btn');
         const sidebar = document.getElementById('sidebar');
 
-        mobileMenuBtn?.addEventListener('click', () => {
-            sidebar.classList.remove('-translate-x-full');
-        });
-        closeSidebarBtn?.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full');
-        });
+        mobileMenuBtn?.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+        closeSidebarBtn?.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
 
-        // Toast function
-        function showToast(msg) {
+        // Toast Feedback
+        function showToast(msg = 'Copied to clipboard') {
             const toast = document.getElementById('toast');
             const text = document.getElementById('toast-text');
             text.innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            toast.classList.remove('translate-y-16', 'opacity-0', 'pointer-events-none');
             setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-            }, 2000);
+                toast.classList.add('translate-y-16', 'opacity-0', 'pointer-events-none');
+            }, 1800);
         }
 
-        // Code copy helper
-        function copyCode(btn) {
-            const pre = btn.nextElementSibling;
+        // Copy Snippet
+        function copySnippet(btn) {
+            const pre = btn.closest('.code-box')?.querySelector('pre');
+            if (!pre) return;
             const code = pre.querySelector('code')?.innerText || pre.innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const originalText = btn.innerText;
-                btn.innerText = 'Copied!';
-                btn.classList.add('!text-emerald-400', '!border-emerald-500');
-                showToast('Code copied to clipboard!');
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                const orig = btn.innerText;
+                btn.innerText = 'Copied';
+                btn.classList.add('text-emerald-400');
+                showToast();
                 setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.classList.remove('!text-emerald-400', '!border-emerald-500');
-                }, 2000);
-            });
+                    btn.innerText = orig;
+                    btn.classList.remove('text-emerald-400');
+                }, 1500);
+            } catch (err) {
+                console.error(err);
+            }
+            document.body.removeChild(textarea);
         }
 
-        // Interactive Wildcard Playground Logic (matches package's PHP regex algorithm)
+        document.querySelectorAll('.copy-btn-snippet').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const code = btn.getAttribute('data-code') || '';
+                const textarea = document.createElement('textarea');
+                textarea.value = code;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast();
+                } catch (e) { }
+                document.body.removeChild(textarea);
+            });
+        });
+
+        // Wildcard Playground Logic
         const grantedInput = document.getElementById('tester-granted');
         const requestedInput = document.getElementById('tester-requested');
         const resultBox = document.getElementById('tester-result');
@@ -1913,7 +1520,7 @@ app('permission')->clearRole($role);</code></pre>
             const requested = requestedInput.value.trim();
 
             if (!granted || !requested) {
-                setResultState(false, 'Please provide both granted pattern and requested permission');
+                setResult(false, 'Please provide both pattern and requested ability');
                 return;
             }
 
@@ -1921,34 +1528,33 @@ app('permission')->clearRole($role);</code></pre>
             if (granted === '*' || granted === requested) {
                 isMatch = true;
             } else if (granted.includes('*') || granted.includes('?')) {
-                // Escape special regex chars except * and ?
-                const escaped = granted.replace(/[.+^${}()|[\\]/g, '\\\\$&')
-                    .replace(/\\*/g, '.*')
-                    .replace(/\\?/g, '.');
+                const escaped = granted.replace(/[.+^${}()|[\\]/g, '\\$&')
+                    .replace(/\\\*/g, '.*')
+                    .replace(/\\\?/g, '.');
                 const pattern = new RegExp('^' + escaped + '$');
                 isMatch = pattern.test(requested);
             }
 
             if (isMatch) {
-                setResultState(true, `ALLOW — Permission Granted: "${granted}" matches "${requested}"`);
+                setResult(true, `Pattern "${granted}" matches "${requested}"`);
             } else {
-                setResultState(false, `DENY — Authorization Denied: "${granted}" does not match "${requested}"`);
+                setResult(false, `Pattern "${granted}" does not match "${requested}"`);
             }
         }
 
-        function setResultState(allowed, message) {
+        function setResult(allowed, msg) {
             if (allowed) {
-                resultBox.className = 'p-4 rounded-xl border flex items-center justify-between transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400';
-                resultIcon.className = 'w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold text-emerald-600 dark:text-emerald-400';
+                resultBox.className = 'p-3 rounded-lg border flex items-center justify-between transition-all bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400';
+                resultIcon.className = 'w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center font-bold text-[10px] text-emerald-600 dark:text-emerald-400';
                 resultIcon.innerText = '✓';
                 resultStatus.innerText = 'ALLOW — Access Granted';
-                resultDetail.innerText = message;
+                resultDetail.innerText = msg;
             } else {
-                resultBox.className = 'p-4 rounded-xl border flex items-center justify-between transition-all bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400';
-                resultIcon.className = 'w-8 h-8 rounded-full bg-rose-500/20 flex items-center justify-center font-bold text-rose-600 dark:text-rose-400';
+                resultBox.className = 'p-3 rounded-lg border flex items-center justify-between transition-all bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400';
+                resultIcon.className = 'w-5 h-5 rounded-full bg-rose-500/20 flex items-center justify-center font-bold text-[10px] text-rose-600 dark:text-rose-400';
                 resultIcon.innerText = '✕';
                 resultStatus.innerText = 'DENY — Access Denied';
-                resultDetail.innerText = message;
+                resultDetail.innerText = msg;
             }
         }
 
@@ -1961,30 +1567,94 @@ app('permission')->clearRole($role);</code></pre>
         grantedInput?.addEventListener('input', evaluateWildcard);
         requestedInput?.addEventListener('input', evaluateWildcard);
 
-        // Live search in guide
-        const searchInput = document.getElementById('doc-search');
-        searchInput?.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase().trim();
-            const links = document.querySelectorAll('#sidebar-nav a');
-            links.forEach(link => {
-                const text = link.innerText.toLowerCase();
-                if (!term || text.includes(term)) {
-                    link.parentElement.style.display = '';
-                } else {
-                    link.parentElement.style.display = 'none';
-                }
+        // Command Palette Search
+        const searchModal = document.getElementById('search-modal');
+        const searchModalTrigger = document.getElementById('search-modal-trigger');
+        const paletteSearchInput = document.getElementById('palette-search-input');
+        const paletteResults = document.getElementById('palette-results');
+
+        const searchDatabase = Array.from(document.querySelectorAll('main section[id]')).map(sec => ({
+            id: sec.id,
+            title: sec.querySelector('h2')?.innerText.replace('#', '').trim() || sec.id,
+            text: sec.innerText.substring(0, 140).replace(/\s+/g, ' ')
+        }));
+
+        function renderSearchResults(query = '') {
+            paletteResults.innerHTML = '';
+            const filtered = searchDatabase.filter(item =>
+                item.title.toLowerCase().includes(query.toLowerCase()) ||
+                item.text.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                paletteResults.innerHTML = `<div class="p-3 text-center text-slate-400 text-xs">No documentation results found for "${query}"</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const el = document.createElement('a');
+                el.href = `#${item.id}`;
+                el.className = 'block p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition text-slate-700 dark:text-slate-200';
+                el.innerHTML = `
+                    <div class="font-semibold text-slate-900 dark:text-white flex items-center gap-1.5 text-xs">
+                        <span class="text-slate-400 font-mono">#</span> ${item.title}
+                    </div>
+                    <div class="text-[11px] text-slate-400 truncate mt-0.5">${item.text}</div>
+                `;
+                el.addEventListener('click', () => closeSearchModal());
+                paletteResults.appendChild(el);
             });
+        }
+
+        function openSearchModal() {
+            searchModal.classList.remove('hidden');
+            searchModal.classList.add('flex');
+            paletteSearchInput.value = '';
+            renderSearchResults();
+            setTimeout(() => paletteSearchInput.focus(), 50);
+        }
+
+        function closeSearchModal() {
+            searchModal.classList.add('hidden');
+            searchModal.classList.remove('flex');
+        }
+
+        searchModalTrigger?.addEventListener('click', openSearchModal);
+        searchModal?.addEventListener('click', (e) => {
+            if (e.target === searchModal) closeSearchModal();
         });
 
-        // Keyboard shortcut '/' to search
+        paletteSearchInput?.addEventListener('input', (e) => renderSearchResults(e.target.value));
+
         window.addEventListener('keydown', (e) => {
-            if (e.key === '/' && document.activeElement !== searchInput) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
                 e.preventDefault();
-                searchInput?.focus();
+                openSearchModal();
+            } else if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                openSearchModal();
+            } else if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+                closeSearchModal();
             }
         });
 
-        // Scrollspy for Sidebar & TOC active states
+        // Matrix Demo Reset
+        function resetMatrixDemo() {
+            document.querySelectorAll('.matrix-toggle').forEach(chk => {
+                const role = chk.dataset.role;
+                const perm = chk.dataset.perm;
+                if (role === 'viewer') {
+                    chk.checked = perm === 'users.view';
+                } else if (role === 'editor') {
+                    chk.checked = perm !== 'users.delete';
+                } else if (role === 'manager') {
+                    chk.checked = true;
+                }
+            });
+            showToast('Matrix values reset to defaults');
+        }
+
+        // Active Section Scrollspy
         window.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('main section[id]');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -2003,9 +1673,9 @@ app('permission')->clearRole($role);</code></pre>
                         });
                         tocLinks.forEach(link => {
                             if (link.getAttribute('href') === '#' + id) {
-                                link.classList.add('text-brand-600', 'dark:text-brand-400', 'font-bold');
+                                link.classList.add('text-brand-600', 'dark:text-brand-400', 'font-semibold');
                             } else {
-                                link.classList.remove('text-brand-600', 'dark:text-brand-400', 'font-bold');
+                                link.classList.remove('text-brand-600', 'dark:text-brand-400', 'font-semibold');
                             }
                         });
                     }
