@@ -1,0 +1,3 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up():void { $users=config('permission.user_model')::getModel()->getTable(); Schema::create(config('permission.tables.team_users','team_users'),function(Blueprint $table)use($users){$table->foreignId('team_id')->constrained(config('permission.tables.teams','teams'))->cascadeOnDelete();$table->foreignId('user_id')->constrained($users)->cascadeOnDelete();$table->timestamps();$table->unique(['team_id','user_id']);}); } public function down():void{Schema::dropIfExists(config('permission.tables.team_users','team_users'));} };
